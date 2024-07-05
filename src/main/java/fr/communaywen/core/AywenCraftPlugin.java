@@ -66,6 +66,7 @@ public final class AywenCraftPlugin extends JavaPlugin {
         final @Nullable PluginCommand proutCommand = super.getCommand("prout");
         if (proutCommand != null)
             proutCommand.setExecutor(new ProutCommand());
+        
         this.getCommand("rtp").setExecutor(new RTPCommand(this));
         getServer().getPluginManager().registerEvents(new AntiTrampling(),this);
         saveDefaultConfig();
