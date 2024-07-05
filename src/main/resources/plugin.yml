@@ -17,6 +17,9 @@ commands:
     description: Affiche les règles.
     permission: ayw.command.rules
     aliases: regles
+  money:
+    description: Manage your money
+    usage: /money [transfer <player> <amount>]
 
 permissions:
   ayw.admin.version:

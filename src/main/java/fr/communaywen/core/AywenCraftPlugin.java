@@ -1,14 +1,12 @@
 package fr.communaywen.core;
 
 import dev.xernas.menulib.MenuLib;
-import fr.communaywen.core.commands.RulesCommand;
-import fr.communaywen.core.commands.TeamCommand;
+import fr.communaywen.core.commands.*;
+import fr.communaywen.core.economy.EconomyManager;
 import fr.communaywen.core.listeners.ChatListener;
 import fr.communaywen.core.teams.TeamManager;
-import fr.communaywen.core.commands.ProutCommand;
 import fr.communaywen.core.utils.DiscordWebhook;
 import fr.communaywen.core.utils.MOTDChanger;
-import fr.communaywen.core.commands.VersionCommand;
 import fr.communaywen.core.utils.PermissionCategory;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -25,6 +23,7 @@ public final class AywenCraftPlugin extends JavaPlugin {
     private TeamManager teamManager;
     private FileConfiguration bookConfig;
     private static AywenCraftPlugin instance;
+    private EconomyManager economyManager;
 
     private void loadBookConfig() {
         File bookFile = new File(getDataFolder(), "rules.yml");
@@ -65,10 +64,15 @@ public final class AywenCraftPlugin extends JavaPlugin {
         final @Nullable PluginCommand proutCommand = super.getCommand("prout");
         if (proutCommand != null)
             proutCommand.setExecutor(new ProutCommand());
+
+        // Initialiser EconomyManager et enregistrer la commande money
+        economyManager = new EconomyManager();
+        this.getCommand("money").setExecutor(new MoneyCommand(economyManager));
     }
 
     @Override
     public void onDisable() {
+        // Logic to save data if necessary
     }
 
     public TeamManager getTeamManager() {
@@ -78,6 +82,7 @@ public final class AywenCraftPlugin extends JavaPlugin {
     public static AywenCraftPlugin getInstance() {
         return instance;
     }
+
     /**
      * Format a permission with the permission prefix.
      *
@@ -90,5 +95,4 @@ public final class AywenCraftPlugin extends JavaPlugin {
                                                    final @NotNull String suffix) {
         return category.formatPermission(suffix);
     }
-
 }
