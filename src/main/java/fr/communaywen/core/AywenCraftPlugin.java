@@ -66,7 +66,7 @@ public final class AywenCraftPlugin extends JavaPlugin {
             proutCommand.setExecutor(new ProutCommand());
 
         // Initialiser EconomyManager et enregistrer la commande money
-        economyManager = new EconomyManager();
+        economyManager = new EconomyManager(getDataFolder());
         this.getCommand("money").setExecutor(new MoneyCommand(economyManager));
     }
 
